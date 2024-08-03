@@ -1,20 +1,21 @@
 'use strict';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-const cardBox = document.querySelector('.card-container');
-const loader = document.querySelector('.js-loader');
-cardBox.addEventListener('click', event => event.preventDefault());
+import refs from './refs';
 
-export function showLoader() {
-  loader.style.display = 'inline-block';
+refs.cardBox.addEventListener('click', event => event.preventDefault());
+
+function showLoader() {
+  refs.loader.style.display = 'inline-block';
 }
 
-export function hideLoader() {
-  loader.style.display = 'none';
+function hideLoader() {
+  refs.loader.style.display = 'none';
 }
 
-export function renderSearcCard(data) {
-  let addCards = ``;
+function renderSearcCard(data) {
+  // let addCards = ``;
+
   const createCardCode = data
     .map(
       ({
@@ -26,7 +27,7 @@ export function renderSearcCard(data) {
         comments,
         downloads,
       }) => {
-        addCards += `<li class="list-group-item"><div class="search-card">
+        return `<li class="list-group-item scrol"><div class="search-card">
    <div class="card-img-box">
      <a clas="card-link" href="${largeImageURL}"><img class="card-img" src="${webformatURL}" alt="${tags}"></a>
    </div>
@@ -41,7 +42,7 @@ export function renderSearcCard(data) {
     )
     .join('');
 
-  cardBox.innerHTML = addCards;
+  refs.cardBox.insertAdjacentHTML('beforeend', createCardCode);
   const gallery = new SimpleLightbox('.card-container a', {
     captionsData: 'alt',
     captionDelay: 250,
@@ -49,3 +50,5 @@ export function renderSearcCard(data) {
   });
   gallery.refresh();
 }
+
+export { renderSearcCard, showLoader, hideLoader };
