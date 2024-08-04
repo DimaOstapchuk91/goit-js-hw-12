@@ -14,8 +14,6 @@ function hideLoader() {
 }
 
 function renderSearcCard(data) {
-  // let addCards = ``;
-
   const createCardCode = data
     .map(
       ({
